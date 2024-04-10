@@ -18,7 +18,7 @@ class Arbol:
         Recorre en preorden el subárbol derecho.
         '''
         if nodo is not None:
-            print(nodo.valor, end="-")
+            print(nodo.valor, end=" ")
             for hijo in nodo.hijos:
                 self.recorrido_preorden(hijo)
 
@@ -31,47 +31,39 @@ class Arbol:
         if nodo is not None:
             for hijo in nodo.hijos:
                 self.recorrido_postorden(hijo)
-            print(nodo.valor, end="-")
-    def recorrido_preorden_Iterativo(self, nodo):
-        if nodo is None:
+            print(nodo.valor, end=" ")
+    def recorrido_preorden_Iterativo(self):
+        if self.raiz is None:
+            return
+        pila = [self.raiz]
+        while pila:
+            nodo = pila.pop()
+            print(nodo.valor, end=" ")
+            pila.extend(reversed(nodo.hijos))
+
+    def recorrido_postorden_Iterativo(self):
+        if self.raiz is None:
             return
 
-        stack = [nodo]
-        result = []
+        pila = [self.raiz]
 
-        while stack:
-            node = stack.pop()
-            result.append(node.valor)
-            stack.extend(reversed(node.hijos))
-
-        return result
-    def recorrido_postorden_Iterativo(self, nodo):
-        if nodo is None:
-            return
-
-        stack = [nodo]
-        result = []
-
-        while stack:
-            node = stack[-1]
-            if node.hijos:
-                stack.extend(node.hijos)
-                node.hijos = []
+        while pila:
+            nodo = pila[-1]
+            if nodo.hijos:
+                pila.extend(reversed(nodo.hijos))
+                nodo.hijos = []
             else:
-                result.append(stack.pop().valor)
-
-        return result[::-1]
+                print(pila.pop().valor, end=" ")
     
-    def Eliminar_nodo(self,nodo):
-        if nodo is not None:
-            nodo.hijos = []
+    def Eliminar_Nodo(self,nodo):
+        padre = nodo.padre
+        nodo.padre = None
+        padre.Eliminar_Nodo_Hijo(nodo)
+        nodo.hijos = []
     
-    def Es_hijo_de(self, nodo):
-        contador = 0
-        if nodo is not None:
-            for hijo in nodo.hijos:
-                self.Es_hijo_de(hijo)
-
+    def Agregar_Nodo(self, nodo_padre, nodo_hijo):
+        nodo_padre.Agregar_Nodo_Hijo(nodo_hijo)
+        nodo_hijo.padre = nodo_padre
                        
 class Nodo:
     '''
@@ -85,35 +77,54 @@ class Nodo:
     def __init__(self, valor):
         self.valor = valor            
         self.hijos = []
+        self.padre = None
+
     def Definir_Nodos_Hijos(self, Lista):
         self.hijos = Lista
+        for hijo in Lista:
+            hijo.padre = self
+    
+    def Imprimir__Nodos_Hijos(self):
+        for hijo in self.hijos:
+            print(hijo.valor)
 
+    def Agregar_Nodo_Hijo(self, nodo):
+        print("Se ha agregado de manera exitosa el nodo: ", nodo.valor, " como hijo del nodo: ", self.valor)
+        self.hijos.append(nodo)
 
-# Creacion de los nodos
-A = Nodo('A')
-B = Nodo('B')
-C = Nodo('C')
-D = Nodo('D')
-E = Nodo('E')
-F = Nodo('F')
-# Definicion de los nodos hijos
-A.Definir_Nodos_Hijos([B,C,D])
-B.Definir_Nodos_Hijos([E,F])
-#
-arbol = Arbol(A)
-print('\nRecorrido preorden:')
-arbol.recorrido_preorden(arbol.raiz)# A-B-E-F-C-D-
-print('\nRecorrido postorden:')
-arbol.recorrido_postorden(arbol.raiz)# E-F-B-C-D-A-
-print('\n')
+    def Eliminar_Nodo_Hijo(self, nodo):
+        for hijo in self.hijos:
+            if hijo.valor == nodo.valor:
+                print("Se ha eliminado de manera exitosa el nodo: ", nodo.valor)
+                self.hijos.remove(nodo)
 
-print('\nRecorrido preorden:')
-PilaPreorden = arbol.recorrido_preorden_Iterativo(arbol.raiz)
-for node in PilaPreorden:
-    print(node, end=",")
+def main():
+    # Creacion de los nodos
+    A = Nodo('A')
+    B = Nodo('B')
+    C = Nodo('C')
+    D = Nodo('D')
+    E = Nodo('E')
+    F = Nodo('F')
+    G = Nodo('G')
+    # Definicion de los nodos hijos
+    A.Definir_Nodos_Hijos([B,C])
+    B.Definir_Nodos_Hijos([E,F,G])
+    # Creacion del Arbol
+    arbol = Arbol(A) # Se ingresa como argumento el nodo raiz
+    arbol.Eliminar_Nodo(G) # Se elimina el nodo D del arbol
+    arbol.Agregar_Nodo(A,D) # Agrega como hijo del nodo A al nodo D
+    print("---Forma Recursiva----")
+    print('\nRecorrido preorden:')
+    arbol.recorrido_preorden(arbol.raiz)# A-B-E-F-C-D-
+    print('\nRecorrido postorden:')
+    arbol.recorrido_postorden(arbol.raiz)# E-F-B-C-D-A-
+    print('\n')
+    print("---Forma Iterativa----")
+    print('\nRecorrido preorden:')
+    arbol.recorrido_preorden_Iterativo()
 
-print('\nRecorrido postorden:')
-PilaPostorden = arbol.recorrido_postorden_Iterativo(arbol.raiz)
-for node1 in PilaPostorden:
-    print(node1, end=",")
+    print('\nRecorrido postorden:')
+    arbol.recorrido_postorden_Iterativo()
 
+main()
