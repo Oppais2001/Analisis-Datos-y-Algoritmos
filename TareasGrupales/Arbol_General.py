@@ -5,12 +5,12 @@ class Arbol:
     Atributos:
         raiz(Nodo): objeto de tipo nodo que servira como la raiz del arbol
     Metodos:
-        Agregar_Nodo: metodo que requiere de un nodo padre y un nodo hijo, para agregar un nuevo nodo.
-        Eliminar_Nodo: metodo hecho para eliminar todas las conexiones de un padre a un nodo a eliminar, y a su ves eliminar todas las conexiones que tiene con sus hijos.
-        recorrido_preorden_Recursivo: En un recorrido en preorden de un árbol, primero se visita el nodo raíz, luego se recorren recursivamente los hijos del nodo, de izquierda a derecha.
-        recorrido_postorden_Recursivo: En un recorrido en postorden de un árbol, primero se recorren recursivamente los hijos del nodo, generalmente de izquierda a derecha, y luego se visita el nodo raíz.
-        recorrido_preorden_Iterativo: En un recorrido en postorden de un árbol, mediante el uso de pila y la activacion de un bucle, el bucle estara activo mientras la pila este no vacia, el primer valor de la pila es la raiz del arbol, luego pasan a ser sus hijos(eliminando el nodo padre de la pila), hasta llegar a un nodo que no tenga hijos.
-        recorrido_postorden_Iterativo: En un recorrido en postorden de un árbol, mediante el uso de pila y la activacion de un bucle, el bucle estara activo mientras la pila este no vacia, el primer valor de la pila es la raiz del arbol, luego pasan a ser sus hijos(eliminando los nodos hijos del nodo padre), hasta hacer que ningun nodo tenga hijos.
+        -Agregar_Nodo: metodo que requiere de un nodo padre y un nodo hijo, para agregar un nuevo nodo.
+        -Eliminar_Nodo: metodo hecho para eliminar todas las conexiones de un padre a un nodo a eliminar, y a su ves eliminar todas las conexiones que tiene con sus hijos.
+        -recorrido_preorden_Recursivo: En un recorrido en preorden de un árbol, primero se visita el nodo raíz, luego se recorren recursivamente los hijos del nodo, de izquierda a derecha.
+        -recorrido_postorden_Recursivo: En un recorrido en postorden de un árbol, primero se recorren recursivamente los hijos del nodo, generalmente de izquierda a derecha, y luego se visita el nodo raíz.
+        -recorrido_preorden_Iterativo: En un recorrido en postorden de un árbol, mediante el uso de pila y la activacion de un bucle, el bucle estara activo mientras la pila este no vacia, el primer valor de la pila es la raiz del arbol, luego pasan a ser sus hijos(eliminando el nodo padre de la pila), hasta llegar a un nodo que no tenga hijos.
+        -recorrido_postorden_Iterativo: En un recorrido en postorden de un árbol, mediante el uso de pila y la activacion de un bucle, el bucle estara activo mientras la pila este no vacia, el primer valor de la pila es la raiz del arbol, luego pasan a ser sus hijos(eliminando los nodos hijos del nodo padre), hasta hacer que ningun nodo tenga hijos.
     '''
     def __init__(self, nodo_raiz):
         self.raiz = nodo_raiz
@@ -124,12 +124,12 @@ def main():
     arbol = Arbol(A) # Se ingresa como argumento el nodo raiz
     arbol.Eliminar_Nodo(G) # Se elimina el nodo D del arbol
     arbol.Agregar_Nodo(A,D) # Agrega como hijo del nodo A al nodo D
-    print("---Forma Recursiva----")
+    print("\n---Forma Recursiva----")
     print('Recorrido en preorden:')
     arbol.recorrido_preorden_Recursivo(arbol.raiz)
     print('\nRecorrido en postorden:')
     arbol.recorrido_postorden_Recursivo(arbol.raiz)
-    print("\n---Forma Iterativa----")
+    print("\n\n---Forma Iterativa----")
     print('Recorrido en preorden:')
     arbol.recorrido_preorden_Iterativo()
 
