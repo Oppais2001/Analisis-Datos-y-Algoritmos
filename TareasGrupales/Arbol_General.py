@@ -132,7 +132,6 @@ def main():
     print("\n\n---Forma Iterativa----")
     print('Recorrido en preorden:')
     arbol.recorrido_preorden_Iterativo()
-
     print('\nRecorrido en postorden:')
     arbol.recorrido_postorden_Iterativo()
 
